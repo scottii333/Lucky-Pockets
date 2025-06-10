@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App.jsx";
 import { Error } from "./components/Error.jsx";
 import { AutenticatedPlayer } from "./Client/AutenticatedPlayer.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,13 +16,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/Autenticated-Player",
-    element: <AutenticatedPlayer />,
+    element: (
+      <ProtectedRoute>
+        <AutenticatedPlayer />
+      </ProtectedRoute>
+    ),
     errorElement: <Error />,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
