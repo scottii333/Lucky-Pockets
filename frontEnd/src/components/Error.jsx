@@ -2,7 +2,7 @@ import { AlertTriangle } from "lucide-react";
 
 export const Error = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#606C38] px-4">
       <div className="bg-white shadow-lg rounded-2xl p-6 flex items-center space-x-4">
         <AlertTriangle className="text-yellow-500 w-8 h-8" />
         <div>
