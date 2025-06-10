@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+:root {
+  --font-sans: "Telma";
+}
+
+.text-outline-283618 {
+  text-shadow: 1px 1px 0 #283618, -1px -1px 0 #283618, 1px -1px 0 #283618,
+    -1px 1px 0 #283618;
+}
+
+.text-outline-BC6C25 {
+  text-shadow: 1px 1px 0 #bc6c25, -1px -1px 0 #bc6c25, 1px -1px 0 #bc6c25,
+    -1px 1px 0 #bc6c25;
+}
+
+.text-dual-outline {
+  color: #fefae0;
+  text-shadow: -1px -1px 0 #283618, 1px -1px 0 #bc6c25, -1px 1px 0 #bc6c25,
+    1px 1px 0 #283618;
+}
