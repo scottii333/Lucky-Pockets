@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 import { LogOut, Trophy, Gamepad2, User } from "lucide-react";
 
 export const AutenticatedPlayer = () => {
+  const navigate = useNavigate();
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const handleLogout = () => {
+    setLoggingOut(true);
+
+    // Simulate 3-second smooth loading before signing out
+    setTimeout(async () => {
+      await supabase.auth.signOut();
+      navigate("/");
+    }, 3000); // 3 seconds
+  };
+
+  if (loggingOut) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#606C38] text-[#FEFAE0] text-xl font-semibold">
+        <div className="animate-pulse">Logging out...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#283618] text-[#FEFAE0] flex">
       {/* Sidebar */}
@@ -20,7 +43,10 @@ export const AutenticatedPlayer = () => {
             <Gamepad2 size={20} />
             Play Game
           </button>
-          <button className="flex items-center gap-2 text-red-300 hover:text-red-500 transition-colors mt-auto">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-red-300 hover:text-red-500 transition-colors mt-auto"
+          >
             <LogOut size={20} />
             Log Out
           </button>
