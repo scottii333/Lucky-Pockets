@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import { LogOut, Trophy, Gamepad2, User } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export const AutenticatedPlayer = () => {
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
+  const [Hamburger, setHamburgerOpen] = useState(false);
 
   const handleLogout = () => {
     setLoggingOut(true);
@@ -25,64 +27,146 @@ export const AutenticatedPlayer = () => {
     );
   }
 
+  const toggleHamburger = () => {
+    setHamburgerOpen(!Hamburger);
+  };
+
   return (
-    <div className="min-h-screen bg-[#283618] text-[#FEFAE0] flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#606C38] p-6 flex flex-col gap-6 shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">🎮 Game Dashboard</h2>
-        <nav className="flex flex-col gap-4">
-          <button className="flex items-center gap-2 hover:text-[#BC6C25] transition-colors">
-            <User size={20} />
-            Profile
-          </button>
-          <button className="flex items-center gap-2 hover:text-[#BC6C25] transition-colors">
-            <Trophy size={20} />
-            Achievements
-          </button>
-          <button className="flex items-center gap-2 hover:text-[#BC6C25] transition-colors">
-            <Gamepad2 size={20} />
-            Play Game
-          </button>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-red-300 hover:text-red-500 transition-colors mt-auto"
-          >
-            <LogOut size={20} />
-            Log Out
-          </button>
-        </nav>
+    <div className="min-h-screen bg-[#283618]  flex flex-col sm:flex-row">
+      {/* ==== Sidebar Navigation (Desktop) ==== */}
+      <aside className="bg-[#FEFAE0] justify-between rounded-2xl m-[1rem]  hidden sm:flex sm:flex-col  sm:w-[13rem] pt-[5rem] p-[1rem]  ">
+        <div className="flex flex-col items-center p-[0.2rem]">
+          {/* Brand Name */}
+          <Link className="text-[#BC6C25] text-2xl font-bold text-outline-283618">
+            Lucky Pockets
+          </Link>
+
+          {/* Sidebar Links */}
+          <nav className="flex flex-col gap-4 mt-8">
+            <Link
+              className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+              to="/Autenticated-Player/achievements"
+            >
+              Achievements
+            </Link>
+            <Link
+              className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+              to="/Autenticated-Player/create-lobby"
+            >
+              Create Lobby
+            </Link>
+            <Link
+              className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+              to="/Autenticated-Player/New-friends"
+            >
+              Add Friends
+            </Link>
+            <Link
+              className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+              to="/Autenticated-Player/history"
+            >
+              History
+            </Link>
+          </nav>
+        </div>
+
+        {/* Logout Button (Bottom of Sidebar) */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-red-300 hover:text-red-500 transition-colors cursor-pointer "
+          title="Log Out"
+          aria-label="Log Out"
+        >
+          <LogOut size={20} />
+          Log Out
+        </button>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-8">
-        <h1 className="text-3xl font-bold mb-4">Welcome Back, Player!</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-[#FEFAE0] text-[#283618] rounded-lg p-6 shadow">
-            <h3 className="text-lg font-semibold">Level</h3>
-            <p className="text-2xl font-bold">14</p>
-          </div>
-          <div className="bg-[#FEFAE0] text-[#283618] rounded-lg p-6 shadow">
-            <h3 className="text-lg font-semibold">XP</h3>
-            <p className="text-2xl font-bold">8,450</p>
-          </div>
-          <div className="bg-[#FEFAE0] text-[#283618] rounded-lg p-6 shadow">
-            <h3 className="text-lg font-semibold">Rank</h3>
-            <p className="text-2xl font-bold">Gold</p>
-          </div>
-        </div>
+      {/* ==== Top Navigation (Mobile) ==== */}
+      <header className="bg-[#FEFAE0] w-100% h-[4rem] m-[1rem] rounded-full flex justify-around items-center sticky top-2 z-50  sm:hidden">
+        {/* Brand Name */}
+        <Link className="text-[#BC6C25] text-2xl font-bold text-outline-283618">
+          Lucky Pockets
+        </Link>
 
-        <div className="mt-10">
-          <h2 className="text-2xl font-semibold mb-2">Recent Matches</h2>
-          <ul className="space-y-2">
-            <li className="bg-[#BC6C25] p-4 rounded-lg">
-              🏆 Won Match vs. AI Bot
-            </li>
-            <li className="bg-[#BC6C25] p-4 rounded-lg">
-              ❌ Lost Match to Player123
-            </li>
-            <li className="bg-[#BC6C25] p-4 rounded-lg">🏆 Won Ranked Match</li>
-          </ul>
-        </div>
+        {/* Hamburger Toggle Button */}
+        <button
+          className="md:hidden text-[#BC6C25] text-2xl relative w-8 h-8 cursor-pointer"
+          onClick={toggleHamburger}
+        >
+          {/* Hamburger Icon */}
+          <div
+            className="absolute inset-0 transition-transform duration-300 ease-in-out transform"
+            style={{
+              transform: Hamburger ? "rotate(180deg)" : "rotate(0deg)",
+              opacity: Hamburger ? 0 : 1,
+            }}
+          >
+            <Menu size={32} />
+          </div>
+
+          {/* Close Icon */}
+          <div
+            className="absolute inset-0 transition-transform duration-300 ease-in-out transform"
+            style={{
+              transform: Hamburger ? "rotate(0deg)" : "rotate(-180deg)",
+              opacity: Hamburger ? 1 : 0,
+            }}
+          >
+            <X size={32} />
+          </div>
+        </button>
+
+        {/* ==== Hamburger Menu (Mobile Only) ==== */}
+        {Hamburger && (
+          <div className="absolute top-[4.2rem] right-0 bg-[#FEFAE0] rounded-lg shadow-lg p-4 md:hidden">
+            <nav className="flex flex-col gap-2">
+              <Link
+                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+                to="/Autenticated-Player/achievements"
+                onClick={() => setHamburgerOpen(false)}
+              >
+                Achievements
+              </Link>
+              <Link
+                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+                to="/Autenticated-Player/create-lobby"
+                onClick={() => setHamburgerOpen(false)}
+              >
+                Create Lobby
+              </Link>
+              <Link
+                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+                to="/Autenticated-Player/New-friends"
+                onClick={() => setHamburgerOpen(false)}
+              >
+                Add Friends
+              </Link>
+              <Link
+                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110 "
+                to="/Autenticated-Player/history"
+                onClick={() => setHamburgerOpen(false)}
+              >
+                History
+              </Link>
+            </nav>
+
+            {/* Logout Button in Mobile Menu */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-red-300 hover:text-red-500 transition-colors cursor-pointer mt-4"
+              title="Log Out"
+              aria-label="Log Out"
+            >
+              <LogOut size={20} />
+              Log Out
+            </button>
+          </div>
+        )}
+      </header>
+
+      <main className="m-[1rem]">
+        <Outlet />
       </main>
     </div>
   );
