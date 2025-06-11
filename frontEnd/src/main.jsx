@@ -7,7 +7,10 @@ import { Error } from "./components/Error.jsx";
 import { AutenticatedPlayer } from "./Client/AutenticatedPlayer.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
-
+import { Lobby } from "./Client/Lobby.jsx";
+import { AddFriend } from "./Client/AddFriend.jsx";
+import { History } from "./Client/History.jsx";
+import { Achievements } from "./Client/Achievements.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +25,24 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     errorElement: <Error />,
+    children: [
+      {
+        path: "create-lobby",
+        element: <Lobby />,
+      },
+      {
+        path: "New-friends",
+        element: <AddFriend />,
+      },
+      {
+        path: "history",
+        element: <History />,
+      },
+      {
+        path: "achievements",
+        element: <Achievements />,
+      },
+    ],
   },
 ]);
 
