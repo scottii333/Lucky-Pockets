@@ -123,18 +123,19 @@ export const AutenticatedPlayer = () => {
             <nav className="flex flex-col gap-2">
               <Link
                 className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
-                to="/Autenticated-Player/achievements"
-                onClick={() => setHamburgerOpen(false)}
-              >
-                Achievements
-              </Link>
-              <Link
-                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
                 to="/Autenticated-Player/create-lobby"
                 onClick={() => setHamburgerOpen(false)}
               >
                 Create Lobby
               </Link>
+              <Link
+                className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
+                to="/Autenticated-Player/achievements"
+                onClick={() => setHamburgerOpen(false)}
+              >
+                Achievements
+              </Link>
+
               <Link
                 className="text-[#BC6C25] text-[1.2rem] hover:text-[#283618] transition-transform duration-300 ease-in-out hover:scale-110"
                 to="/Autenticated-Player/New-friends"
@@ -165,7 +166,7 @@ export const AutenticatedPlayer = () => {
         )}
       </header>
 
-      <main className="m-[1rem]">
+      <main className="m-[1rem] ">
         <Outlet />
       </main>
     </div>
